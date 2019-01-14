@@ -13,4 +13,16 @@ echo "l'élève1 se nomme " . $eleve1->getPrenom() . " " . $eleve1->getNom() . "
 echo 'Il a ' . $eleve1->getAge() . " ans <br />";*/
 
 $db = new Database();
-$eleve  = $db->getEleves();
+$eleves  = $db->getEleves();
+foreach ($eleves  as $eleve )
+{
+//    /**
+//     * @var $eleve Eleve
+//     *
+//     */
+    if (!$eleve instanceof Eleve)
+        continue;
+
+    print( $eleve->getNom());
+}
+//print_r ($eleves) ;

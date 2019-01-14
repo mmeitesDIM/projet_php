@@ -14,8 +14,8 @@ class Database
     {
         try {
 
-            $conn = mysqli_connect('mysql:host=localhost', 'root', 'root');
-            $this->bdd = mysqli_select_db('dbname=projet', $conn );
+//            $this->bdd = new mysqli('localhost', 'root', 'root','projet');
+
         } catch (Exception $e) {
             die('Erreur : ' . $e->getMessage());
         }
@@ -26,13 +26,16 @@ class Database
      */
     public function getEleves(): array
     {
-        $request = $this->bdd->query('SELECT ID, NOM, PRENOM, AGE, FROM eleve');
-        if (!$request)
-            return [];
-        while ($eleve = $request->fetchAll()) // Chaque entrée sera récupérée et placée dans un array.
+        $this->bdd = new mysqli('localhost', 'root', 'root','projet');
+
+        $request = $this->bdd->query('SELECT ID, NOM, PRENOM, AGE FROM eleve');
+        $eleves = [];
+        while ($eleve = $request->fetch_assoc()) // Chaque entrée sera récupérée et placée dans un array.
         {
-            echo $eleve['nom']. ' '. $eleve['prenom']. ' '. $eleve['age'];
+//            echo $eleve['NOM']. ' '. $eleve['PRENOM']. ' '. $eleve['AGE']."<br>";
+            $eleve1 = new Eleve($eleve['NOM'], $eleve['PRENOM'], $eleve['AGE']);
+            array_push($eleves, $eleve1);
         }
-        return $request;
+        return $eleves;
     }
 }
